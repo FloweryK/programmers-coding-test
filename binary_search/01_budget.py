@@ -1,21 +1,21 @@
 def solution(budgets, M):
-    if sum(budgets) <= M:
+    if sum(budgets) < M:
         return max(budgets)
 
-    start = 1
-    end = M
-    cut = (start+end)//2
-    while end-start != 1:
+    left = 1
+    right = M
+    mid = (left + right) // 2
+    while left <= right:
         total = 0
         for b in budgets:
-            total += b if b < cut else cut
+            total += b if b < mid else mid
 
         if total > M:
-            end = cut
-        else:
-            start = cut
-        cut = (start + end) // 2
-    return cut
+            right = mid - 1
+        elif total < M:
+            left = mid + 1
+        mid = (right + left) // 2
+    return mid
 
 
 if __name__ == '__main__':

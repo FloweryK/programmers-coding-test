@@ -2,23 +2,21 @@ import heapq
 
 
 def solution(stock, dates, supplies, k):
-    lst = sorted([(s, d) for s, d in zip(supplies, dates)], key=lambda x: x[0], reverse=True)
+    lst = [(d, s) for d, s in zip(dates, supplies)]
+    lst = sorted(lst, key=lambda x: x[1], reverse=True)
 
     day = 0
-    answer = 0
+    day += stock
+    supply = 0
+
     while day < k:
-        stock += -1
-        print('day %i stock %i' % (day, stock))
-        if stock < 0:
-            for i, (supply, date) in enumerate(lst):
-                if date <= day:
-                    stock += supply
-                    answer += 1
-                    break
-            del lst[i]
-        day += stock + 1
-        stock = 0
-    return answer
+        for i in range(len(lst)):
+            if lst[i][0] <= day:
+                supply += 1
+                day += lst[i][1]
+                del lst[i]
+                break
+    return supply
 
 
 def solution2(stock, dates, supplies, k):
