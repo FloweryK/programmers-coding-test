@@ -3,6 +3,12 @@ __pycache__
 **/.DS_Store
 /.idea
 
+<<<<<<< HEAD
 **/venv
 **/src
 **/test
+=======
+/venv
+/src
+/test
+>>>>>>> refs/remotes/origin/master
