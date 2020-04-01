@@ -1,31 +1,24 @@
 def solution(arrangement):
-    stack = []
-    braket = []
+    arrangement = list(arrangement)
+    stick = 0
+    answer = 0
 
-    for i, char in enumerate(arrangement):
-        if char == '(':
-            stack.append([i, '('])
+    while arrangement:
+        braket = arrangement.pop()
+
+        if braket == ')':
+            if arrangement[-1] == '(':
+                answer += stick
+                _ = arrangement.pop()
+            else:
+                stick += 1
+                answer += 1
         else:
-            braket.append((stack[-1][0], i))
-            del stack[-1]
+            stick += -1
 
-    laser = []
-    stick = []
-    for tup in braket:
-        if tup[0] == (tup[1] - 1):
-            laser.append(tup)
-        else:
-            stick.append(tup)
-
-    cut = 0
-    for s in stick:
-        cut += 1
-        for l in laser:
-            if s[0] < l[0] < s[1]:
-                cut += 1
-    return cut
+    return answer
 
 
 if __name__ == '__main__':
-    arrangement = '(())'
+    arrangement = '()(((()())(())()))(())'
     print(solution(arrangement))

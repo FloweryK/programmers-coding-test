@@ -1,3 +1,4 @@
+# DFS solution
 def solution(n, computers):
     answer = 0
     visited = [0] * n
@@ -15,11 +16,29 @@ def solution(n, computers):
                     stack.append(j)
     return answer
 
+# DFS solution, x2 faster
+def solution2(n, computers):
+    networks = 0
+    not_visited = [i for i in range(n)]
 
-import queue
+    while not_visited:
+        networks += 1
+        head = not_visited.pop()
+        stack = []
+        stack.append(head)
+
+        while stack:
+            tail = stack.pop()
+            for i, connected in enumerate(computers[tail]):
+                if connected and (i in not_visited):
+                    stack.append(i)
+                    not_visited.remove(i)
+    return networks
+
 
 # BFS solution
-def solution2(n, computers):
+import queue
+def solution3(n, computers):
     answer = 0
     visited = [0]*n
     qu = queue.Queue()
@@ -35,6 +54,27 @@ def solution2(n, computers):
                 if connected and (not visited[j]):
                     qu.put(j)
     return answer
+
+
+# BFS solution, x3 faster
+from collections import deque
+def solution4(n, computers):
+    networks = 0
+    not_visited = [i for i in range(n)]
+
+    while not_visited:
+        networks += 1
+        head = not_visited.pop()
+        queue = deque()
+        queue.append(head)
+
+        while queue:
+            tail = queue.popleft()
+            for i, connected in enumerate(computers[tail]):
+                if connected and (i in not_visited):
+                    queue.append(i)
+                    not_visited.remove(i)
+    return networks
 
 
 if __name__ == '__main__':
