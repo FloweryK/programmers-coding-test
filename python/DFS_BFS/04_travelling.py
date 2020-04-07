@@ -18,7 +18,31 @@ def solution(tickets):
     return sorted(answer)[0]
 
 
+# x1.5 faster
+def solution2(tickets):
+    answer = []
+    stack = [[t] for t in tickets if t[0] == 'ICN']
+    while stack:
+        path = stack.pop()
+        if len(path) == len(tickets):
+            answer.append(path)
+
+        remaining = [t for t in tickets]
+        for t in path:
+            if t in path:
+                remaining.remove(t)
+
+        while remaining:
+            ticket = remaining.pop()
+            if path[-1][-1] == ticket[0]:
+                stack.append(path + [ticket])
+
+    answer = sorted(answer)[0]
+    answer = [a[0] for a in answer] + [answer[-1][-1]]
+    return answer
+
+
 if __name__ == '__main__':
-    tickets1 = [['ICN', 'JFK'], ['HND', 'IAD'], ['JFK', 'HND']]
+    tickets1 = [['ICN', 'SFO'], ['SFO', 'ICN'], ['ICN', 'SFO'],['SFO', 'QRE']]
     tickets2 = [['ICN', 'SFO'], ['ICN', 'ATL'], ['SFO', 'ATL'], ['ATL', 'ICN'], ['ATL', 'SFO']]
     print(solution(tickets2))
