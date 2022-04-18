@@ -5,12 +5,15 @@ def solution(operations):
 
     for op in operations:
         if op == "D 1":
-            q = [-n for n in q]
-            heapq.heapify(q)
-            heapq.heappop(q)
-            q = [-n for n in q]
+            if q:
+                q = [-n for n in q]
+                heapq.heapify(q)
+                heapq.heappop(q)
+                q = [-n for n in q]
+                heapq.heapify(q)
         elif op == "D -1":
-            heapq.heappop(q)
+            if q:
+                heapq.heappop(q)
         else:
             n = int(op[2:])
             heapq.heappush(q, n)
